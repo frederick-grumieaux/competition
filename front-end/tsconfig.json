@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "allowJs": true,
+    "preserveConstEnums": true,
+    "allowUnreachableCode": true,
+    "disableSizeLimit": true,
+    
+    "target": "es5",
+    "moduleResolution": "node",
+    "module": "esnext",
+    "strict": true,
+    "importHelpers": true,
+    
+    "outDir": "dist/",
+
+    "rootDir": ".",
+    "rootDirs": ["sssrc", "bbbuild/node_modules/tslib"],
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "app-shell/*": [ "src/app-shell/*" ],
+      "tslib": ["build/node_modules/tslib/tslib.d.ts"]
+    }
+  },
+  "include": [ "src/**/*" ]
+}
