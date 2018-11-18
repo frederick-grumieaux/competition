@@ -86,8 +86,11 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _app_shell_window__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 
 document
@@ -95,6 +98,20 @@ document
     .innerHTML = "This is the 1st version of the app.";
 
 console.log("application started");
+console.log("The data = ", _app_shell_window__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+console.log("Loading another file.");
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({ data: true });
+
+
 
 /***/ })
 /******/ ]);
