@@ -19,8 +19,11 @@
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "app-shell/*": [ "src/app-shell/*" ],
-      "tslib": ["build/node_modules/tslib/tslib.d.ts"]
+      "tslib": ["build/node_modules/tslib/tslib.d.ts"],
+      "src/*": [ "src/*" ],
+      "shell/*": [ "src/app-shell/*" ],
+      "comp/*": [ "src/components/*" ],
+      "store/*": ["src/store/*"]
     }
   },
   "include": [ "src/**/*" ]

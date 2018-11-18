@@ -22,7 +22,10 @@ module.exports = {
         extensions: ['.js', '.ts', '.tsx'],
         alias: {
             tslib: path.resolve(__dirname, 'node_modules/tslib/tslib.js'),
-            'app-shell': path.resolve(__dirname, '../src/app-shell/')
+            'shell': path.resolve(__dirname, '../src/app-shell/'),
+            'src': path.resolve(__dirname, '../src/'),
+            'comp': path.resolve(__dirname, '../src/components/'),
+            'store': path.resolve(__dirname, '../src/store')
         }
     },  
     plugins: [
