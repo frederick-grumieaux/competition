@@ -11,5 +11,10 @@ module.exports = {
     plugins: [
         //Copy all the files from the ../www/**/* folder to the output folder (= ../dist)
         new CopyWebpackPlugin([{ from: 'www', force: true }], { context: '../.' })
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, '../dist'),
+        compress: true,
+        port: 9000
+    }
 }
