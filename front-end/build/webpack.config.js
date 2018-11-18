@@ -1,6 +1,7 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     mode: "none", //Please no auto magic, even if it is good for me. 
@@ -31,7 +32,10 @@ module.exports = {
     plugins: [
         //Copy all the files from the ../www/**/* folder to the output folder (= ../dist)
         new CopyWebpackPlugin([{ from: 'www', force: true }], { context: '../.' }),
-        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" })
+        //Create a css file for the styles entry point. (else we get styles.js)
+        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" }),
+        //Generates a graph with all the files and their size. (uncomment to see)
+        //new BundleAnalyzerPlugin()
     ],
     module: {
         rules: [
@@ -41,8 +45,7 @@ module.exports = {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader',
-                options: { logLevel: 'info' }
+                use: 'ts-loader'
             }
         ],
     },
