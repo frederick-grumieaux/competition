@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/react": "^16.7.13",
+    "@types/react-dom": "^16.0.11",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "tslib": "^1.9.3"

@@ -7,7 +7,13 @@ module.exports = {
     mode: "none", //Please no auto magic, even if it is good for me. 
     context: path.resolve(__dirname),
     entry: {
-        app: path.resolve(__dirname, "../src/index.ts"),
+        //Input file for webpack = output of typescript compiler. (so 1st run tsc --watch -p .. and then also start this one.)
+        //reasoning: that way we can easily find (if something goes wrong) where the problem  lays. TypeScript or Webpack.
+        //           also we don't need to care anymore about keeping stuff equal.
+        //Also: TypeScript does not have to do the conversion to ES5, that is the job of webpack. So the output of TS is very readable.
+        app: path.resolve(__dirname, "../dist/index.js"),
+        //We also need to compile our styles.
+        //Typescript does not touch those, so we can find the in the src folder.
         styles: path.resolve(__dirname, "../src/styles/style.scss")
     },
     output: {
@@ -23,11 +29,12 @@ module.exports = {
         extensions: ['.js', '.ts', '.tsx'],
         alias: {
             tslib: path.resolve(__dirname, 'node_modules/tslib/tslib.js'),
-            'shell': path.resolve(__dirname, '../src/app-shell/'),
-            'src': path.resolve(__dirname, '../src/'),
-            'comp': path.resolve(__dirname, '../src/components/'),
-            'store': path.resolve(__dirname, '../src/store')
-        }
+            'shell': path.resolve(__dirname, '../dist/app-shell/'),
+            'src': path.resolve(__dirname, '../dist/'),
+            'comp': path.resolve(__dirname, '../dist/components/'),
+            'store': path.resolve(__dirname, '../dist/store')
+        },
+        modules: [path.resolve(__dirname, 'node_modules')]
     },  
     plugins: [
         //Copy all the files from the ../www/**/* folder to the output folder (= ../dist)
@@ -35,7 +42,7 @@ module.exports = {
         //Create a css file for the styles entry point. (else we get styles.js)
         new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: "[id].css" }),
         //Generates a graph with all the files and their size. (uncomment to see)
-        //new BundleAnalyzerPlugin()
+        //new BundleAnalyzerPlugin(),
     ],
     module: {
         rules: [

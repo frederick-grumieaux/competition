@@ -6,25 +6,27 @@
     "allowUnreachableCode": true,
     "disableSizeLimit": true,
     
-    "target": "es5",
+    "target": "esnext",
     "moduleResolution": "node",
     "module": "esnext",
     "strict": true,
     "importHelpers": true,
-    
+
     "outDir": "dist/",
 
-    "rootDir": ".",
-    "rootDirs": ["sssrc", "bbbuild/node_modules/tslib"],
+    //"rootDir": ".",
+    "rootDirs": [".", "build/node_modules/"],
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "tslib": ["build/node_modules/tslib/tslib.d.ts"],
+      "*": [ "build/node_modules/@types/*" ],
+      "tslib": [ "build/node_modules/tslib/tslib.d.ts" ],
       "src/*": [ "src/*" ],
       "shell/*": [ "src/app-shell/*" ],
       "comp/*": [ "src/components/*" ],
-      "store/*": ["src/store/*"]
-    }
+      "store/*": [ "src/store/*" ],
+    },
+    //"typeRoots": ["build/node_modules"]
   },
   "include": [ "src/**/*" ]
 }
