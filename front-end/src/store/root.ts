@@ -28,9 +28,13 @@ interface ApplicationState {
 }
 
 //export public API of this file.
+const playerActions = players.actions();
+const teamActions = teams.actions();
 export {
     store,
     ApplicationState,
+    playerActions,
+    teamActions,
 };
 
 

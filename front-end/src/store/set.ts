@@ -11,6 +11,11 @@ export class setOptions<T> {
     getKey: undefined | instanceToKey<T>;
 }
 
+export interface ISetActions<T> {
+    InsertRecord(record: T): AnyAction;
+    RemoveRecord(record: T): AnyAction;
+    RemoveKey(id: string): AnyAction;
+}
 
 
 export class manager<T> {
@@ -23,6 +28,7 @@ export class manager<T> {
             this.config.getKey = (item: T) => (item as any).id;
 
         this.reducer = this.reducer.bind(this);
+        this.actions = this.actions.bind(this);
     }
 
     public reducer(state:  optional<set<T>>, action: AnyAction ) {
@@ -51,8 +57,37 @@ export class manager<T> {
                     clone.items[action.id] = new localRecord<T>();
                 }
                 return clone;
+            case "DELETE_RESOURCE_"+this.config.typeName:
+                var clone = {...state, items: state.items};
+                delete (clone.items || {})[action.id];
+                return clone;
 
         }
+    }
+
+    public actions(): ISetActions<T>{
+        var config = this.config;
+        return {
+            InsertRecord: function(record: T): AnyAction{
+                return { 
+                    type: "RECEIVED_RESOURCE_"+config.typeName, 
+                    id: config.getKey!(record),
+                    record: record,
+                };
+            },
+            RemoveRecord: function(record: T): AnyAction {
+                return {
+                    type: "DELETE_RESOURCE_"+config.typeName,
+                    id: config.getKey!(record),
+                };
+            },
+            RemoveKey: function(id: string): AnyAction {
+                return {
+                    type: "DELETE_RESOURCE_"+config.typeName,
+                    id: id,
+                };
+            }
+        };
     }
 }
 
@@ -62,11 +97,11 @@ export class set<T> {
         this.items = {};
     }
 
-    items: hashSetOfT<localRecord<T>> | undefined;
+    items: hashSetOfT<localRecord<T>>;
 }
 
 type recState = 'LOADING' | 'LOADED' | 'REFRESHING' | 'DELETING' | 'DELETED';
-class localRecord<T> {
+export class localRecord<T> {
     constructor(){
         this.value = undefined;
         this.status = 'LOADING';

@@ -60,3 +60,10 @@ store.store.dispatch(actions.ScoreGoal("2399", 10, false));
 store.store.dispatch(actions.ScoreGoal("2399", 14, false));
 store.store.dispatch(actions.ScoreGoal("2334", 18, false));
 
+store.store.dispatch(store.playerActions.InsertRecord({no: "2334", firstName: "Juul", lastName: 'Vandingehem'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "2534", firstName: "Matt", lastName: 'Zalliger'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "2399", firstName: "Kris", lastName: 'Verplanke'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "7045", firstName: "Flin", lastName: 'Vandorpe'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "6980", firstName: "Paul", lastName: 'Vandewalle'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "9883", firstName: "Nick", lastName: 'Nickelodium'}))
+store.store.dispatch(store.playerActions.InsertRecord({no: "3345", firstName: "Fien", lastName: 'Kruismans'}))

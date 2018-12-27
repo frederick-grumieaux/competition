@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Game, { GamePlayer } from 'src/models/game';
+import PlayerDetails from 'comp/player-details';
 
 interface props {
     game: Game;
@@ -26,10 +27,11 @@ export class TeamPlayers extends React.Component<props, state> {
                 {players.map(player => 
                     <li key={player.number}>
                         <span>{player.number}</span>
-                        <span>player name</span>
+                        <PlayerDetails display="NAME" playerNo={player.playerNo} />
                         <span>cards</span>
                         <span>time penalities</span>
                         <span>total # goals</span>
+                        <span>{player.playerNo}</span>
                     </li>
                 )}
             </ul>
