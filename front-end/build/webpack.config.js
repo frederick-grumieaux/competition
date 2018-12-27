@@ -52,8 +52,26 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             },
             {
+                //Note: I don't think this is still used.
+                //We use a separate step for converting tsx files to js files.
+                //instead > the new .js step is used to transpile to ES2015
                 test: /\.tsx?$/,
-                use: 'ts-loader'
+                use: ['ts-loader']
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: [{
+                    loader: 'babel-loader',
+                    options: {
+                        presets:['@babel/preset-env'],
+                        plugins:[
+                            [ '@babel/plugin-proposal-object-rest-spread', {}],
+                            [ '@babel/plugin-transform-runtime', {}],
+                            //[ '@babel/plugin-proposal-class-properties', { "loose": true } ]
+                        ]
+                    }
+                }],
             }
         ],
     },

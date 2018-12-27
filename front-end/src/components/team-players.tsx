@@ -17,9 +17,7 @@ export class TeamPlayers extends React.Component<props, state> {
             this.props.game.visitors;
         
         var players = team.players;
-
-        console.log("logging the team:", team, players);
-
+        
         return <section>
             <h1>{this.props.isHomeTeam ? 'Home' : 'Guests'}</h1>
             <h3>colors: {team.colors.map((value, idx) => <span key={idx}>{value}</span>)}</h3>
