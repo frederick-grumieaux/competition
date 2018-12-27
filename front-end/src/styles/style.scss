@@ -1,7 +1,48 @@
 body {
 
-	div {
-		background-color: lightblue;
-		font-size: xx-large;
+}
+
+div.goals-all {
+	display: grid;
+	
+	width: 8em;
+	grid-gap: 3px;
+	grid-template-columns: 20% 20% 20% 20% 20%;
+	grid-auto-flow: row;
+
+	background: white;
+	align-content: start;
+	>div{
+		place-self:center;
+		display:contents;
 	}
+	>div.header {
+		font-size: large;
+		font-weight: bold;
+		font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+	}
+	>div.goal-details {
+		&:hover{
+			color: red;
+		}
+		display: contents;
+	}
+}
+
+main.theGame {
+	display: grid;
+	grid-gap: 5px;
+	grid-template-columns: 1fr 8em 1fr;
+	grid-auto-flow: dense;
+	
+	>section.homeTeam {
+		grid-column-start: 1;
+	}
+	>section.visitorTeam {
+		grid-column-start: 3;
+	}
+	>section.score {
+		grid-column-start: 2;	
+	}
+
 }
