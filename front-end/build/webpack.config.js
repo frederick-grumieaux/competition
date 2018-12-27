@@ -32,6 +32,7 @@ module.exports = {
             'shell': path.resolve(__dirname, '../dist/app-shell/'),
             'src': path.resolve(__dirname, '../dist/'),
             'comp': path.resolve(__dirname, '../dist/components/'),
+            'models': path.resolve(__dirname, '../dist/models/'),
             'store': path.resolve(__dirname, '../dist/store')
         },
         modules: [path.resolve(__dirname, 'node_modules')]

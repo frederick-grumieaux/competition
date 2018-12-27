@@ -19,12 +19,13 @@
     "jsx": "react",
     "baseUrl": "./",
     "paths": {
-      "*": [ "build/node_modules/@types/*" ],
+      "*": [ "build/node_modules/@types/*", "build/node_modules/*" ],
       "tslib": [ "build/node_modules/tslib/tslib.d.ts" ],
       "src/*": [ "src/*" ],
       "shell/*": [ "src/app-shell/*" ],
       "comp/*": [ "src/components/*" ],
       "store/*": [ "src/store/*" ],
+      "models/*": ["src/models/*"],
     },
     //"typeRoots": ["build/node_modules"]
   },
