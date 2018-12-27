@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux'; 
+import { optional } from 'shell/types';
 
 declare type instanceToKey<T> = (rec:T) => string;
 export class setOptions<T> {
@@ -24,7 +25,7 @@ export class manager<T> {
         this.reducer = this.reducer.bind(this);
     }
 
-    public reducer(state: set<T> | undefined, action: AnyAction ) {
+    public reducer(state:  optional<set<T>>, action: AnyAction ) {
         if (!state) state = new set<T>();
 
         switch(action.type){
@@ -71,6 +72,6 @@ class localRecord<T> {
         this.status = 'LOADING';
     }
 
-    value: T | undefined;
+    value: optional<T>;
     status: recState
 }
