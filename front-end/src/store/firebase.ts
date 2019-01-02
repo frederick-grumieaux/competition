@@ -11,12 +11,29 @@ db.settings({timestampsInSnapshots: true});
 
 //start using the database connection...
 var hwref = db.doc('translations/hello-world');
-console.log("fetching data", hwref.path);
-hwref
-    .get()
-    .then(x =>{
-        console.log("args: ", x.exists, x.id, x.ref);
-        console.log("received value:", x.data());
+console.log("observing data", hwref.path);
+var data = {} as any;
+hwref.onSnapshot(x => {
+        console.log("received new snapshot ...", x.exists, x.id);
+        console.log("received value:", data = x.data());
     });
-
+setTimeout(() => {
+    var promise : Promise<void>;
+    if (data['nl-NL']){
+        promise = hwref.update({
+            'nl-BE': "Dag wereld",
+            'nl-NL': firebase.firestore.FieldValue.delete()
+        });
+    }
+    else {
+        promise = hwref.update({
+            'nl-BE': "Dag wereld",
+            'nl-NL': "Dag Iedereen"
+        });
+    }
+    promise
+        .then(x => console.log("record updated"))
+        .catch(x => console.error("update failed:", x));
+    
+}, 10000);
 export default db;
