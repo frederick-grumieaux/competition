@@ -5,6 +5,7 @@ import * as store from 'src/store/root';
 import { Game } from 'comp/game/general';
 import { Provider } from 'react-redux';
 import { actions } from './store/game';
+import database from 'store/firebase';
 
 var root = document.getElementById('injectionpoint');
 root!.innerHTML = "This is the 2nd version of the app.";
@@ -39,6 +40,7 @@ class MyExample extends React.Component<props, state> {
 
 ReactDOM.render(<MyExample name="Joe"/>, document.getElementById('injectionpoint'));
 
+console.log("Using database:", database.app);
 
 store.store.dispatch(actions.AddGuestPlayer('2334', 12));
 store.store.dispatch(actions.AddGuestPlayer('2534', 10));
