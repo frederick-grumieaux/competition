@@ -1,5 +1,6 @@
 import { AnyAction } from 'redux'; 
 import { optional } from 'shell/types';
+import { BaseReducer } from 'store/reducer';
 
 declare type instanceToKey<T> = (rec:T) => string;
 export class setOptions<T> {
@@ -18,51 +19,64 @@ export interface ISetActions<T> {
 }
 
 
-export class manager<T> {
-    config: setOptions<T>;
+export class Manager<T>  extends BaseReducer<set<T>> {
+    protected config: setOptions<T>;
     
-    constructor (config: setOptions<T>){
+    constructor(config: setOptions<T>) {
+        super(new set<T>());
+
         this.config = config;
 
         if (!this.config.getKey)
             this.config.getKey = (item: T) => (item as any).id;
 
-        this.reducer = this.reducer.bind(this);
         this.actions = this.actions.bind(this);
     }
 
-    public reducer(state:  optional<set<T>>, action: AnyAction ) {
-        if (!state) state = new set<T>();
-
-        switch(action.type){
-            default: return state;
-            case "RECEIVED_RESOURCE_"+this.config.typeName:
-                var clone = { ...state };
-                clone.items = clone.items || {};
-
-                var rec = new localRecord<T>();
-                rec.value = action.record;
-                rec.status = 'LOADED';
-
-                clone.items[action.id] = rec;
-                return clone;
-            case "REQUEST_RESOUCE_"+this.config.typeName:
-                var clone = { ...state, items: state.items };
-                clone.items = clone.items || {};
-                if (clone.items[action.id]) {
-                    var item = clone.items[action.id] as localRecord<T>;
-                    clone.items[action.id] = { ...item };
-                    (clone.items[action.id] as localRecord<T>).status = 'REFRESHING';
-                } else {
-                    clone.items[action.id] = new localRecord<T>();
-                }
-                return clone;
-            case "DELETE_RESOURCE_"+this.config.typeName:
-                var clone = {...state, items: state.items};
-                delete (clone.items || {})[action.id];
-                return clone;
-
+    ActionSwitch(cloner: () => set<T>, action: AnyAction) {
+        switch(action.type) { 
+            case 'RECEIVED_RESOURCE_'+ this.config.typeName: return this.receivedRecord(cloner, action);
+            case 'DELETE_RESOURCE_' + this.config.typeName: return this.deleteRecord(cloner, action);
+            case 'REQUEST_RESOUCE_' + this.config.typeName: return this.requestRecord(cloner, action);
         }
+    }
+
+    cloneItems(cloner: () => set<T>): set<T> {
+        var clone = cloner();
+        clone.items = { ...clone.items };
+        return clone;
+    }
+
+    requestRecord(cloner: () => set<T>, action: AnyAction) {
+        var clone = this.cloneItems(cloner);        
+        if (clone.items[action.id]) {
+            var item = clone.items[action.id] as localRecord<T>;
+            clone.items[action.id] = { ...item };
+            (clone.items[action.id] as localRecord<T>).status = 'REFRESHING';
+        } else {
+            clone.items[action.id] = new localRecord<T>();
+        }
+        return clone;
+    }
+    receivedRecord(cloner: () => set<T>, action: AnyAction) {
+        var clone = this.cloneItems(cloner);
+        
+        var rec = new localRecord<T>();
+        rec.value = action.record;
+        rec.status = 'LOADED';
+
+        clone.items[action.id] = rec;
+        return clone;
+    }
+    deleteRecord(cloner: () => set<T>, action: AnyAction) {
+        //check if the record was in memory
+        var oldstate = super.getOldState(cloner);
+        if (!oldstate.items[action.id]) return;
+
+        //do the stuff..
+        var clone = this.cloneItems(cloner);
+        delete clone.items[action.id];
+        return clone;
     }
 
     public actions(): ISetActions<T>{

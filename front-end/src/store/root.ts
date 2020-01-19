@@ -1,5 +1,5 @@
 import * as Redux from 'redux';
-import { manager, set } from 'store/set';
+import { Manager, set } from 'store/set';
 import Game from 'models/game';
 import Player from 'models/player';
 import Team from 'models/team';
@@ -7,14 +7,14 @@ import { reducer as gameReducer } from 'store/game';
 
 
 //Create some generic managers for collections of data
-var players = new manager<Player>({ typeName: 'players', getKey: player => ''+player.no});
-var teams = new manager<Team>({ typeName: 'teams', getKey: team => ''+team.id});
+var players = new Manager<Player>({ typeName: 'players', getKey: player => ''+player.no});
+var teams = new Manager<Team>({ typeName: 'teams', getKey: team => ''+team.id});
 
 //Combine several reducers into one master reducer
 var applicationReducer = Redux.combineReducers({
     game: gameReducer,
-    players: players.reducer,
-    teams: teams.reducer
+    players: players.Reduce,
+    teams: teams.Reduce
 });
 
 //create the actual store
