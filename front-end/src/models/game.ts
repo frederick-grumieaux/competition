@@ -37,13 +37,17 @@ export class GamePlayer {
     public number: number;
 }
 export class Goal {
-    constructor(playerId: string, minute: number){
+    constructor(ref: string, playerId: string, minute: number, half: 1|2) {
+        this.ref = ref;
         this.playerId = playerId;
         this.minute = minute;
+        this.half = half;
     }
 
+    public ref: string;
     public playerId: string;
     public minute: number;
+    public half: 1|2;
 }
 type faults =  'YELLOW' | 'TIME' | 'RED' ;
 export class Fault {

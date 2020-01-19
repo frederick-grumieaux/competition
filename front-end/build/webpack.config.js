@@ -16,6 +16,7 @@ module.exports = {
         //Typescript does not touch those, so we can find the in the src folder.
         styles: path.resolve(__dirname, "../src/styles/style.scss")
     },
+    watch: true,
     output: {
         path: path.resolve(__dirname, "../dist"),
         libraryTarget: 'umd',
